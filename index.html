@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulang Tahun Spesial untuk Tuan Putri Nia Audina</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #f8a5c2;
+            --accent: #ff9ff3;
+            --dark: #2f3542;
+            --light: #f7f1e3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://placehold.co/1920x1080') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        section {
+            padding: 80px 20px;
+            position: relative;
+        }
+        
+        .memory-box {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memory-box h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .memory-box p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            opacity: 0;
+        }
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .photo-item {
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .love-meter {
+            width: 100%;
+            height: 30px;
+            background-color: #eee;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .love-meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            border-radius: 15px;
+            transition: width 1s ease;
+        }
+        
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .memory-box {
+                padding: 30px 20px;
+            }
+            
+            .memory-box h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Selamat Ulang Tahun</h1>
+        <p> aku ingin hari spesialmu tetap istimewa...</p>
+        <button class="btn" id="startBtn">Buka Pesanku</button>
+    </header>
+    
+    <section id="memory1" class="hidden">
+        <div class="memory-box">
+            <h2>Kenangan Yang Tak Terlupakan</h2>
+            <p>Masih ingat pertama kali kita bertemu? Sepertinya takdir sedang bermain-main dengan kita...</p>
+            
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/pink/white?text=Pertama+Kali+Kita+Bertemu" alt="Pasangan muda tersenyum di taman bunga dengan latar senja yang indah" />
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/pink/white?text=Kencan+Pertama+Kita" alt="Pasangan duduk di kafe kecil dengan minuman dan makanan di depan mereka" />
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/pink/white?text=Momen+Yg+Menggoda" alt="Pasangan berfoto selfie sambil menunjukkan gestur ceria" />
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/pink/white?text=Tertawa+Bersama" alt="Pasangan bermain di pantai dengan latar matahari terbenam yang dramatis" />
+                </div>
+            </div>
+            
+            <button class="btn" id="nextBtn1">Teruskan</button>
+        </div>
+    </section>
+    
+    <section id="memory2" class="hidden">
+        <div class="memory-box">
+            <h2>Apa Yang Masih Kuingat Tentangmu</h2>
+            <p>Banyak hal kecil yang membuatku tersenyum saat mengingatnya...</p>
+            <ul style="margin-bottom: 20px;">
+                <li>Cara kamu tersenyum saat tertawa</li>
+                <li>Suara kamu saat manis dengan nada tertentu</li>
+                <li>Senyumanmu saat melihat sesuatu yang lucu</li>
+                <li>Ekspresi mu saat bertemu denganku</li>
+            </ul>
+            
+            <button class="btn" id="loveBtn">..</button>
+            
+            <div id="loveMeter" style="display: none;">
+                <div class="love-meter">
+                    <div class="love-meter-fill" id="meterFill"></div>
+                </div>
+                <p id="loveText"></p>
+            </div>
+            
+            <button class="btn hidden" id="nextBtn2" style="margin-top: 20px;">Masuk Ke Bagian Rahasia</button>
+        </div>
+    </section>
+    
+    <section id="memory3" class="hidden">
+        <div class="memory-box">
+            <h2>Sebuah Permintaan Kecil</h2>
+            <p>Di hari ulang tahunmu ini, aku punya permintaan kecil...</p>
+            <p>Bisakah kita mulai lagi dengan lembaran baru? Aku sudah banyak belajar, dan aku benar-benar merindukanmu.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; margin: 40px 0;">
+                <button class="btn" id="yesBtn" style="background-color: var(--primary); color: white;">Ya, Aku Mau</button>
+                <button class="btn" id="noBtn">Beri Aku Waktu</button>
+            </div>
+            
+            <div id="messageBox" class="hidden" style="margin-top: 40px;">
+                <p id="messageText"></p>
+                <div id="extraContent" class="hidden"></div>
+                <button class="btn hidden" id="finalBtn" style="margin-top: 20px;">Selanjutnya</button>
+            </div>
+        </div>
+    </section>
+    
+    <section id="memory4" class="hidden">
+        <div class="memory-box">
+            <h2>Hadiah Untukmu</h2>
+            <p>Sebagai tanda permintaan maaf dan keinginanku untuk memulihkan hubungan kita...</p>
+            
+            <div style="background-color: var(--secondary); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
+                <h3 style="color: white; margin-bottom: 10px;">Undangan Spesial</h3>
+                <p style="color: white;">Kamu mendapatkan 1x undangan ke tempat favoritmu!</p>
+                <p style="color: white; font-weight: bold; margin-top: 10px;">Kapanpun kamu siap dibulan 8 nanti </p>
+            </div>
+            
+            <p>Kirimkan pesanku ini kepada mereka yang special hari ini:</p>
+            <textarea id="messageSend" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--secondary); margin: 20px 0; min-height: 100px;">Selamat ulang tahun cantik... Semoga hari ini penuh kebahagiaan. Aku ingin kita bisa memperbaiki semuanya.</textarea>
+            <button class="btn" id="sendBtn" style="background-color: var(--primary); color: white;">Kirim Pesan Spesial</button>
+            
+            <div id="finalMessage" class="hidden" style="margin-top: 40px; text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">Terima Kasih!</h3>
+                <p>Harapan terbaikku untukmu di hari ulang tahun ini. Semoga kita bisa bertemu lagi dalam kondisi yang lebih baik.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Dibuat dengan ♥ untuk hari ulang tahunmu yang spesial</p>
+    </footer>
+    
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+           <h2>Kirim Pesan via WhatsApp</h2>
+            <p>Pesan ini akan dikirim melalui WhatsApp. Pastikan nomor sudah benar:</p>
+            <input type="tel" id="phoneNumber" placeholder="Masukkan nomor WhatsApp" style="width:100%; padding:10px; margin:10px 0; border-radius:8px; border:1px solid #ccc;">
+            <button class="btn" id="confirmSend" style="background-color: var(--primary); color: white;">Ya, Kirim Sekarang</button>
+            <button class="btn" id="cancelSend">Batalkan</button>
+        </div>
+    </div>
+
+    <script>
+        // Reveal sections sequentially
+        document.getElementById('startBtn').addEventListener('click', function() {
+            this.style.display = 'none';
+            document.querySelector('header p').textContent = "Izinkan aku membawa kamu melalui beberapa kenangan indah kita...";
+            
+            // Create hearts animation
+            createHearts();
+            
+            setTimeout(() => {
+                document.getElementById('memory1').classList.add('reveal');
+            }, 1000);
+        });
+        
+        document.getElementById('nextBtn1').addEventListener('click', function() {
+            document.getElementById('memory1').classList.remove('reveal');
+            
+            // Scroll to next section smoothly
+            setTimeout(() => {
+                document.getElementById('memory2').classList.add('reveal');
+                document.getElementById('memory1').style.display = 'none';
+            }, 500);
+            
+            // Confetti effect
+            createConfetti();
+        });
+        
+        document.getElementById('loveBtn').addEventListener('click', function() {
+            document.getElementById('loveMeter').style.display = 'block';
+            document.getElementById('loveBtn').textContent = 'Mengukur...';
+            
+            // Animate love meter
+            let fill = 0;
+            const interval = setInterval(() => {
+                fill += Math.random() * 5;
+                document.getElementById('meterFill').style.width = `${fill}%`;
+                
+                if (fill >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('loveBtn').textContent = 'Hasilnya!';
+                    document.getElementById('loveText').textContent = 'Ternyata masih ada 100% rasa yang tersisa untukmu...';
+                    
+                    // Show next button after delay
+                    setTimeout(() => {
+                        document.getElementById('nextBtn2').classList.add('reveal');
+                    }, 1500);
+                }
+            }, 100);
+        });
+        
+        document.getElementById('nextBtn2').addEventListener('click', function() {
+            document.getElementById('memory2').classList.remove('reveal');
+            
+            setTimeout(() => {
+                document.getElementById('memory3').classList.add('reveal');
+                document.getElementById('memory2').style.display = 'none';
+            }, 500);
+        });
+        
+        // Handle yes/no buttons
+        document.getElementById('yesBtn').addEventListener('click', function() {
+            createConfetti();
+            document.getElementById('messageBox').classList.add('reveal');
+            document.getElementById('messageText').textContent = 'Aku sangat senang! Aku janji akan menjadi lebih baik kali ini. Mari kita mulai lembaran baru bersama.';
+            
+            const extraContent = document.getElementById('extraContent');
+            extraContent.innerHTML = `
+                <div style="margin-top: 20px; padding: 15px; background-color: var(--secondary); border-radius: 10px; color: white;">
+                    <h3>Hadiah Spesial</h3>
+                    <p>Sebagai tanda terima kasih, aku sudah memesan kencan spesial untuk kita berdua!</p>
+                </div>
+            `;
+            extraContent.classList.add('reveal');
+            document.getElementById('finalBtn').classList.add('reveal');
+        });
+        
+        document.getElementById('noBtn').addEventListener('click', function() {
+            document.getElementById('messageBox').classList.add('reveal');
+            document.getElementById('messageText').textContent = 'Aku mengerti... Tapi tolong pertimbangkan lagi. Aku benar-benar ingin memperbaiki semua kesalahan yang pernah aku buat.';
+            
+            const extraContent = document.getElementById('extraContent');
+            extraContent.innerHTML = `
+                <p style="margin-top: 15px;">Tapi aku harap kamu tidak menutup pintu sepenuhnya...</p>
+                <img src="https://placehold.co/600x300/pink/white?text=Tunggu+Aku" alt="Pria memegang tanda bertuliskan 'Tunggu Aku' dengan ekspresi memohon" style="width: 100%; border-radius: 10px; margin-top: 15px;" />
+            `;
+            extraContent.classList.add('reveal');
+            document.getElementById('finalBtn').classList.add('reveal');
+        });
+        
+        document.getElementById('finalBtn').addEventListener('click', function() {
+            document.getElementById('memory3').classList.remove('reveal');
+            
+            setTimeout(() => {
+                document.getElementById('memory4').classList.add('reveal');
+                document.getElementById('memory3').style.display = 'none';
+            }, 500);
+        });
+        
+        // Handle send message
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            document.getElementById('confirmationModal').classList.add('show');
+        });
+        
+        document.getElementById('confirmSend').addEventListener('click', function() {
+            document.getElementById('confirmationModal').classList.remove('show');
+            document.getElementById('sendBtn').textContent = 'Mengirim...';
+            
+            // Simulate sending
+            setTimeout(() => {
+                document.getElementById('sendBtn').textContent = 'Terkirim!';
+                document.getElementById('finalMessage').classList.add('reveal');
+                document.getElementById('sendBtn').style.display = 'none';
+                document.getElementById('messageSend').style.display = 'none';
+                
+                // Final animation
+                createHearts();
+                setTimeout(createConfetti, 500);
+                
+                // Scroll to bottom
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 1500);
+        });
+        
+        document.getElementById('cancelSend').addEventListener('click', function() {
+            document.getElementById('confirmationModal').classList.remove('show');
+        });
+        
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('confirmationModal').classList.remove('show');
+        });
+        
+        // Utility functions
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ff9ff3', '#f8a5c2', '#feca57', '#ff9f43'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(confetti);
+                
+                // Animate
+                setTimeout(() => {
+                    confetti.style.opacity = 1;
+                    confetti.style.transform = `translateY(${Math.random() * 500 + 50}px) rotate(${Math.random() * 360}deg)`;
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 2000);
+                }, i * 10);
+            }
+        }
+        
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '♥';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+                document.body.appendChild(heart);
+                
+                // Animate
+                setTimeout(() => {
+                    heart.style.opacity = 1;
+                    heart.style.transform = `translate(-50%, -50%) scale(${Math.random() * 2 + 1})`;
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        heart.style.opacity = 0;
+                        setTimeout(() => {
+                            heart.remove();
+                        }, 1000);
+                    }, 2000);
+                }, i * 100);
+            }
+        }
+        
+        // Intersection observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
